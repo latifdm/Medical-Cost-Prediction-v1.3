@@ -164,7 +164,7 @@ elif page == "Machine Learning App":
         bmi = calculate_bmi(height, weight)
 
         # Preprocess input with the correct variable names
-        input_df = preprocess_input(age, bmi, children, sex, smoker, region)
+        input_data_for_df = preprocess_input(age, bmi, children, sex, smoker, region)
 
         with st.spinner("Menghitung prediksi ..."):
             prediction = Gradient_Boosting_Regressor_Model.predict(input_df)[0]
