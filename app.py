@@ -12,9 +12,9 @@ st.set_page_config(
 )
 
 # 2. Kemudian, panggil fungsi-fungsi Streamlit lain atau muat resource
-@st.cache_resource # Gunakan st.cache_resource untuk model/objek besar
+@st.cache(allow_output_mutation=True)
 def load_model():
-    with open('gradient_boosting_regressor_model.pkl', 'rb') as file:
+    with open('gradient_boosting_regressor_model(1).pkl', 'rb') as file:
         model = pickle.load(file)
     return model
 
@@ -27,7 +27,7 @@ def calculate_bmi(height, weight): # Variabel parameter disesuaikan
     BMI = weight (kg) / (height (m))^2
     """
     if height <= 0 or weight <= 0:
-        return 0 # Handle invalid input gracefully
+        st.error("Tinggi/berat tidak valid")
     height_m = height / 100
     return weight / (height_m ** 2)
 
@@ -50,16 +50,11 @@ def preprocess_input(age, bmi, children, sex, smoker, region) -> pd.DataFrame:
         "age": age,
         "bmi": bmi,
         "children": children,
-        # One-hot encoding untuk 'sex'
         "sex_male": 1 if sex == "Pria" else 0,
-        # One-hot encoding untuk 'smoker'
         "smoker_yes": 1 if smoker == "Ya" else 0,
-        # One-hot encoding untuk 'region' (asumsi 'southwest' di-drop)
         "region_northwest": 1 if region == "northwest" else 0,
         "region_southeast": 1 if region == "southeast" else 0,
         "region_southwest": 1 if region == "southwest" else 0,
-        # 'region_southwest' tidak dibuat sebagai kolom eksplisit,
-        # tetapi diwakili ketika semua kolom region lainnya adalah 0.
     }
 
     # Buat DataFrame hanya dengan kolom yang ada di `cols` dan urutan yang benar
