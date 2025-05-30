@@ -150,7 +150,7 @@ elif page == "Machine Learning App":
     region = right.selectbox('Lokasi Tinggal', ("southeast", "southwest", "northwest"))
 
     # Calculate BMI here, before the predict button logic
-    
+    bmi = calculate_bmi(height, weight)
 
     # Single "Predict Medical Cost" button
     if st.button("Predict Medical Cost"):
@@ -160,8 +160,6 @@ elif page == "Machine Learning App":
         except Exception as e: # Catch a broader exception for initial debugging if model loading fails
             st.error(f"⚠️ **Error loading model**: {e}. Pastikan file model Anda benar.")
             st.stop()
-
-        bmi = calculate_bmi(height, weight)
 
         # Preprocess input with the correct variable names
         input_data_for_df = preprocess_input(age, bmi, children, sex, smoker, region)
