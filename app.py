@@ -41,7 +41,7 @@ def preprocess_input(age, bmi, children, sex, smoker, region) -> pd.DataFrame:
         "children",
         "sex_male",
         "smoker_yes",
-        "region_nortwest", 
+        "region_northwest", 
         "region_southeast",
         "region_southwest",
     ]
@@ -162,10 +162,10 @@ elif page == "Machine Learning App":
             st.stop()
 
         # Preprocess input with the correct variable names
-        input_data_for_df = preprocess_input(age, bmi, children, sex, smoker, region)
+        input_df = preprocess_input(age, bmi, children, sex, smoker, region)
 
         with st.spinner("Menghitung prediksi ..."):
-            prediction = Gradient_Boosting_Regressor_Model.predict(input_df)[0]
+            prediction = model.predict(input_df)[0]
 
         st.subheader("💵 Estimasi Biaya Medis Tahunan")
         st.metric("Charges (USD)", f"${prediction:,.2f}")
